@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'prenom' => $this->faker->lastName(),
             'age' => $this->faker->numberBetween(15,85),
             'role_id' => 2,
-            'avatar_id' => $this->faker->numberBetween(1,10),
+            'avatar_id' => $this->faker->numberBetween(2,6),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => bcrypt("azertyuiop"), // password

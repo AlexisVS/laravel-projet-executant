@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
+
     {
         $this->call([
             RoleSeeder::class,
@@ -40,14 +41,16 @@ class DatabaseSeeder extends Seeder
             ->count(4)
             ->create();
 
-        Avatar::factory()->count(10)->create();
+
+        Avatar::factory()->state(['fileName' => '000default-image.png'])->count(1)->create();
+        Avatar::factory()->count(5)->create();
 
         User::factory()
             ->state([
                 "email" => "admin@gmail.com",
                 "password" => bcrypt("admin@gmail.com"),
                 "role_id" => "1",
-                "avatar_id" => rand(1, 10),
+                "avatar_id" => rand(2, 6),
             ])
             ->count(1)
             ->create();
@@ -57,7 +60,7 @@ class DatabaseSeeder extends Seeder
                 "email" => "member@gmail.com",
                 "password" => bcrypt("member@gmail.com"),
                 "role_id" => "2",
-                "avatar_id" => rand(1, 10),
+                "avatar_id" => rand(2, 6),
             ])
             ->count(1)
             ->create();

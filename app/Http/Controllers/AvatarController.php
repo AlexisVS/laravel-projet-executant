@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Avatar;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -93,7 +94,14 @@ class AvatarController extends Controller
      */
     public function destroy(Avatar $avatar)
     {
-        Storage::delete("public/storage/img/" . $avatar->fileName);
+        Storage::delete("/public/storage/img/" . $avatar->fileName);
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($user->avatar_id == $avatar->id) {
+                $user->avatar_id = 1;
+                $user->push();
+            }
+        }
         $avatar->delete();
         return redirect('/dashboard/avatar/')->with(['success'=> 'L\'avatar à été correctement supprimé', "error" => "L'avatar n'a pas été correctement supprimé"]);
     }

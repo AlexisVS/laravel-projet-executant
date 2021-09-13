@@ -61,7 +61,8 @@
                       <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
 
                         <span class="relative flex items-center">
-                          <a href="/dashboard/category/{{ $categorie->id }}/edit" class="h-max py-1.5 mr-4 px-3 rounded-full font-bold bg-indigo-500 hover:bg-indigo-600 text-white">Editer</a>
+                          <a href="/dashboard/category/{{ $categorie->id }}/edit"
+                            class="h-max py-1.5 mr-4 px-3 rounded-full font-bold bg-indigo-500 hover:bg-indigo-600 text-white">Editer</a>
                           <form class="w-max h-max" action="/dashboard/category/{{ $categorie->id }}"
                             method="post">
                             @csrf

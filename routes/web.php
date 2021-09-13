@@ -37,11 +37,13 @@ Route::get('/dashboard/gallery/{id}/download', function ($id) {
     return response()->download("storage/img/" . $image->fileName);
 }); // DOWNLOAD
 
-Route::resource('/dashboard/avatar', AvatarController::class);
-Route::resource('/dashboard/category', CategorieController::class);
-Route::resource('/dashboard/image', ImageController::class);
-Route::resource('/dashboard/user', UserController::class);
 
+Route::middleware(['auth', 'isAdmin'])->group( function () {
+    Route::resource('/dashboard/avatar', AvatarController::class);
+    Route::resource('/dashboard/category', CategorieController::class);
+    Route::resource('/dashboard/image', ImageController::class);
+    Route::resource('/dashboard/user', UserController::class);
+});
 
 
 require __DIR__.'/auth.php';

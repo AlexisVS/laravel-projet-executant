@@ -4,9 +4,11 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Avatar') }}
       </h2>
-      <a href="/dashboard/avatar/create"
-        class="h-max py-1 px-4 font-semibold rounded-full bg-indigo-500 text-white hover:bg-indigo-600">Ajouter un
-        avatar</a>
+      @if ($avatars->count() < 5)
+        <a href="/dashboard/avatar/create"
+          class="h-max py-1 px-4 font-semibold rounded-full bg-indigo-500 text-white hover:bg-indigo-600">Ajouter un
+          avatar</a>
+      @endif
     </div>
   </x-slot>
 
@@ -44,41 +46,44 @@
                   </thead>
                   <tbody>
                     @foreach ($avatars as $avatar)
-                      <tr class="hover:bg-gray-200">
-                        <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
-                          <div class="flex items-center">
+                      @if ($avatar->id != 1)
+                        <tr class="hover:bg-gray-200">
+                          <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
+                            <div class="flex items-center">
 
-                            <div class="ml-3">
-                              <p class="text-gray-900 whitespace-no-wrap">
-                                {{ $avatar->id }}
-                              </p>
+                              <div class="ml-3">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                  {{ $avatar->id }}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                            {{ $avatar->name }}
-                          </p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                            {{ $avatar->fileName }}
-                          </p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
+                          </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ $avatar->name }}
+                            </p>
+                          </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ $avatar->fileName }}
+                            </p>
+                          </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-transparent text-sm">
 
-                          <span class="relative">
-                            <form class="w-max h-max" action="/dashboard/article/{{ $avatar->id }}" method="post">
-                              @csrf
-                              @method('DELETE')
-                              <input
-                                class="h-max px-3 py-1 rounded-full bg-red-500 hover:bg-red-600 text-white text-lg font-bold "
-                                type="submit" value="X">
-                            </form>
-                          </span>
-                          </span>
-                        </td>
-                      </tr>
+                            <span class="relative">
+                              <form class="w-max h-max" action="/dashboard/avatar/{{ $avatar->id }}"
+                                method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input
+                                  class="h-max px-3 py-1 rounded-full bg-red-500 hover:bg-red-600 text-white text-lg font-bold "
+                                  type="submit" value="X">
+                              </form>
+                            </span>
+                            </span>
+                          </td>
+                        </tr>
+                      @endif
                     @endforeach
                   </tbody>
                 </table>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
+use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategorieController extends Controller
 {
@@ -83,7 +85,7 @@ class CategorieController extends Controller
         ]);
 
         $categorie->name = $request->name;
-        $categorie->push();
+        $categorie->update();
         return redirect('/dashboard/category')->with(['success' => 'La catégorie à été correctement mis a jour', 'error' => 'La catégorie n\'a pas été mis a jour']);
     }
 
@@ -95,7 +97,14 @@ class CategorieController extends Controller
      */
     public function destroy(Categorie $categorie)
     {
+        $images = Image::all();
+        foreach ($images as $image) {
+            if ($image->category_id == $categorie->id) {
+                Storage::delete('storage/img/' . $image->fileName);
+                $image->truncate();
+            }
+        }
         $categorie->delete();
-        return redirect('/dashboard/category')->with(['success' => 'La catégorie à été correctement mis a jour', 'error' => 'La catégorie n\'a pas été mis a jour']);;
+        return redirect('/dashboard/category')->with(['success' => 'La catégorie à été correctement mis a jour', 'error' => 'La catégorie n\'a pas été mis a jour']);
     }
 }
