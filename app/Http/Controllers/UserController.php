@@ -76,6 +76,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $request->validate([
+            'name' => 'required',
+            'prenom' => 'required',
+            'email' => 'required',
+            'age' => 'required',
+            'avatar_id' => 'required',
+        ]);
+
         $user = User::find($id);
         $user->name = $request->name;
         $user->prenom = $request->prenom;
@@ -84,7 +93,7 @@ class UserController extends Controller
         $user->role_id = $request->role_id;
         $user->avatar_id = $request->avatar_id;
         $user->push();
-        return redirect('/dashboard/user');
+        return redirect('/dashboard/user')->with(['success' => "L'utilisateur a été mis a jour"]);
     }
 
     /**
@@ -95,6 +104,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect('/dashboard/user')->with(['success' => "L'utilisateur à été supprimé"]);
     }
 }

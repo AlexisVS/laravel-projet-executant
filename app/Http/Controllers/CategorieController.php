@@ -36,10 +36,14 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
         $store = new Categorie();
         $store->name = $request->name;
         $store->save();
-        return redirect("/dashboard/category");
+        return redirect("/dashboard/category")->with(['success' => 'La catégorie à été correctement ajouté', 'error' => 'La catégorie n\'a pas été ajouté']);
     }
 
     /**
@@ -74,9 +78,13 @@ class CategorieController extends Controller
      */
     public function update(Request $request, Categorie $categorie)
     {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
         $categorie->name = $request->name;
         $categorie->push();
-        return redirect('/dashboard/category');
+        return redirect('/dashboard/category')->with(['success' => 'La catégorie à été correctement mis a jour', 'error' => 'La catégorie n\'a pas été mis a jour']);
     }
 
     /**
@@ -88,6 +96,6 @@ class CategorieController extends Controller
     public function destroy(Categorie $categorie)
     {
         $categorie->delete();
-        return redirect('/dashboard/category');
+        return redirect('/dashboard/category')->with(['success' => 'La catégorie à été correctement mis a jour', 'error' => 'La catégorie n\'a pas été mis a jour']);;
     }
 }

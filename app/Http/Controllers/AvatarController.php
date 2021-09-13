@@ -37,13 +37,18 @@ class AvatarController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string',
+            'fileName' => 'required',
+        ]);
+
         Storage::put('public/storage/img', $request->file("fileName"));
 
         $store = new Avatar();
         $store->name = $request->name;
         $store->fileName = $request->file('fileName')->hashName();
         $store->save();
-        return redirect('/dashboard/avatar');
+        return redirect('/dashboard/avatar')->with('success', "L'avatar à été rajouté avec succes !");
     }
 
     /**
@@ -90,6 +95,6 @@ class AvatarController extends Controller
     {
         Storage::delete("public/storage/img/" . $avatar->fileName);
         $avatar->delete();
-        return redirect('/dashboard/avatar/');
+        return redirect('/dashboard/avatar/')->with(['success'=> 'L\'avatar à été correctement supprimé', "error" => "L'avatar n'a pas été correctement supprimé"]);
     }
 }

@@ -28,12 +28,13 @@ Route::get('/dashboard', function () {
 
 
 Route::get('/dashboard/gallery', function () {
-    return view('dashboard.pages.gallery.index');
+    $images = Image::all();
+    return view('dashboard.pages.gallery.index', compact('images'));
 }); // INDEX
 
-Route::get('/dashboard/gallery/{id}', function ($id) {
+Route::get('/dashboard/gallery/{id}/download', function ($id) {
     $image = Image::find($id);
-    return response()->download("public/img/" . $image->fileName);
+    return response()->download("storage/img/" . $image->fileName);
 }); // DOWNLOAD
 
 Route::resource('/dashboard/avatar', AvatarController::class);

@@ -39,12 +39,16 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'fileName' => 'required',
+        ]);
+
         Storage::put('public/storage/img', $request->file("fileName"));
 
         $store = new Image();
         $store->fileName = $request->file("fileName")->hashName();
         $store->category_id = $request->category;
-        return redirect("/dashboard/image");
+        return redirect("/dashboard/image")->with(['success' => 'L\'image à été correctement ajouté']);
     }
 
     /**
@@ -92,6 +96,6 @@ class ImageController extends Controller
         Storage::delete('public/storage/img/' . $image->fileName);
 
         $image->delete();
-        return redirect("/dashboard/image");
+        return redirect("/dashboard/image")->with(['success' => 'L\'image à été correctement supprimé']);
     }
 }
