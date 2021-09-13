@@ -10,6 +10,6 @@ class Categorie extends Model
     use HasFactory;
 
     public function images() {
-        return $this->hasMany(Image::class, 'category_id');
+        return $this->hasMany(Image::class, 'category_id', 'id');
     }
 }

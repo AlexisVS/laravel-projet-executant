@@ -9,7 +9,8 @@ class Image extends Model
 {
     use HasFactory;
 
-    public function categories() {
+    public function categories()
+    {
         return $this->belongsTo(Categorie::class, 'category_id', 'id');
     }
 }
