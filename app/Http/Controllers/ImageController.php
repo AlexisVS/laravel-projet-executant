@@ -47,7 +47,7 @@ class ImageController extends Controller
 
         $store = new Image();
         $store->fileName = $request->file("fileName")->hashName();
-        $store->category_id = $request->category;
+        $store->category_id = $request->category_id;
         return redirect("/dashboard/image")->with(['success' => 'L\'image à été correctement ajouté']);
     }
 

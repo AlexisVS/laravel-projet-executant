@@ -22,21 +22,22 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-
-Route::get('/dashboard/gallery', function () {
-    $images = Image::all();
-    return view('dashboard.pages.gallery.index', compact('images'));
-}); // INDEX
-
-Route::get('/dashboard/gallery/{id}/download', function ($id) {
-    $image = Image::find($id);
-    return response()->download("storage/img/" . $image->fileName);
-}); // DOWNLOAD
-
+Route::middleware(['auth'])->group( function () {
+    
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    
+    Route::get('/dashboard/gallery', function () {
+        $images = Image::all();
+        return view('dashboard.pages.gallery.index', compact('images'));
+    }); // INDEX
+    
+    Route::get('/dashboard/gallery/{id}/download', function ($id) {
+        $image = Image::find($id);
+        return response()->download("storage/img/" . $image->fileName);
+    }); // DOWNLOAD
+});
 
 Route::middleware(['auth', 'isAdmin'])->group( function () {
     Route::resource('/dashboard/avatar', AvatarController::class);
@@ -44,6 +45,5 @@ Route::middleware(['auth', 'isAdmin'])->group( function () {
     Route::resource('/dashboard/image', ImageController::class);
     Route::resource('/dashboard/user', UserController::class);
 });
-
 
 require __DIR__.'/auth.php';

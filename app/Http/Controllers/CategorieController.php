@@ -78,14 +78,14 @@ class CategorieController extends Controller
      * @param  \App\Models\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categorie $categorie)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required'
         ]);
-
+        $categorie = Categorie::find($id);
         $categorie->name = $request->name;
-        $categorie->update();
+        $categorie->save();
         return redirect('/dashboard/category')->with(['success' => 'La catégorie à été correctement mis a jour', 'error' => 'La catégorie n\'a pas été mis a jour']);
     }
 
@@ -95,16 +95,19 @@ class CategorieController extends Controller
      * @param  \App\Models\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categorie $categorie)
+    public function destroy($id)
     {
-        $images = Image::all();
-        foreach ($images as $image) {
-            if ($image->category_id == $categorie->id) {
-                Storage::delete('storage/img/' . $image->fileName);
-                $image->truncate();
-            }
-        }
-        $categorie->delete();
+        // $images = Image::all();
+        // dd($images);
+        // foreach ($images as $image) {
+        //     if ($image->category_id == $categorie->id) {
+        //         Storage::delete('storage/img/' . $image->fileName);
+        //         $image->delete();
+        //     }
+        // }
+        // $categorie->delete();
+        $destroy = Categorie::find($id);
+        $destroy->delete();
         return redirect('/dashboard/category')->with(['success' => 'La catégorie à été correctement mis a jour', 'error' => 'La catégorie n\'a pas été mis a jour']);
     }
 }

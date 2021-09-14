@@ -4,7 +4,7 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Avatar') }}
       </h2>
-      @if ($avatars->count() < 5)
+      @if ($avatars->count() < 6)
         <a href="/dashboard/avatar/create"
           class="h-max py-1 px-4 font-semibold rounded-full bg-indigo-500 text-white hover:bg-indigo-600">Ajouter un
           avatar</a>
