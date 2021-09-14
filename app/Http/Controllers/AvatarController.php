@@ -42,11 +42,20 @@ class AvatarController extends Controller
             'name' => 'required|string',
             'fileName' => 'required',
         ]);
-
-        Storage::put('public/storage/img', $request->file("fileName"));
-
         $store = new Avatar();
-        $store->name = $request->name;
+        if ($request->fileName == null) {
+            $url = $request->imageLink;
+            $image = file_get_contents($url);
+            $imageName = substr(strrpos($url, '/'));
+            Storage::put('public/storage/img', file($image) + 1);
+            $store->name = $image;
+        } else {
+            Storage::put('public/storage/img', $request->file("fileName"));
+            $store->name = $request->name;
+        }
+        
+
+
         $store->fileName = $request->file('fileName')->hashName();
         $store->save();
         return redirect('/dashboard/avatar')->with('success', "L'avatar à été rajouté avec succes !");
