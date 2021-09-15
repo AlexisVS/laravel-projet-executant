@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group( function () {
         $image = Image::find($id);
         return response()->download("storage/img/" . $image->fileName);
     }); // DOWNLOAD
+
+    Route::get('dashboard/livewire-image', function () {
+        return view('dashboard.pages.livewire-image.index');
+    });
 });
 
 Route::middleware(['auth', 'isAdmin'])->group( function () {

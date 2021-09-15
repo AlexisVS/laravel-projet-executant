@@ -63,6 +63,9 @@
                     <x-nav-link href="/dashboard/user" :active="url()->current() == url('/dashboard/user')  ">
                         {{ __('Utilisateurs') }}
                     </x-nav-link>
+                    <x-nav-link href="/dashboard/livewire-image" :active="url()->current() == url('/dashboard/livewire-image')  ">
+                        {{ __('Livewire Images') }}
+                    </x-nav-link>
                 </div>
             </div>
             
