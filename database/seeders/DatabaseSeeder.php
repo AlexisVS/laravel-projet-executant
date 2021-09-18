@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Avatar;
 use App\Models\Categorie;
 use App\Models\Image;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -65,6 +66,16 @@ class DatabaseSeeder extends Seeder
             ->count(1)
             ->create();
 
+        User::factory()
+            ->state([
+                "email" => "webmaster@gmail.com",
+                "password" => bcrypt("webmaster@gmail.com"),
+                "role_id" => "3",
+                "avatar_id" => rand(2, 6),
+            ])
+            ->count(1)
+            ->create();
         User::factory()->count(50)->create();
+        Post::factory()->count(50)->create();
     }
 }

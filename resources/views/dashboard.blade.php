@@ -74,7 +74,20 @@
                       <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                         <div
                           class="w-max h-max px-3 rounded-full font-semibold border-2 text-base 
-                          {{ Auth()->user()->roles->id == 1 ? 'text-red-600 bg-red-300 border-red-500' : ' text-green-700 bg-green-200 border-green-600' }}
+                          @switch(Auth()->user()->roles->id)
+                            @case(1)
+                            text-red-600 bg-red-300 border-red-500
+                              @break
+                          
+                            @case(2)
+                            text-green-700 bg-green-200 border-green-600
+                              @break
+                          
+                            @case(3)
+                            text-indigo-700 bg-indigo-200 border-indigo-600
+                              @break
+                          
+                          @endswitch
                           ">
                           {{ Auth()->user()->roles->name }}
                         </div>
