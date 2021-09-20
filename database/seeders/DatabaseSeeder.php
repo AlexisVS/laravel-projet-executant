@@ -42,8 +42,8 @@ class DatabaseSeeder extends Seeder
             ->count(4)
             ->create();
 
-
         Avatar::factory()->state(['fileName' => '0a0default-image.png'])->count(1)->create();
+
         Avatar::factory()->count(5)->create();
 
         User::factory()
@@ -75,7 +75,9 @@ class DatabaseSeeder extends Seeder
             ])
             ->count(1)
             ->create();
+
         User::factory()->count(50)->create();
+
         Post::factory()->count(50)->create();
     }
 }

@@ -20,6 +20,7 @@
   {{-- Livewire script --}}
   @livewireStyles
 </head>
+@include('./flash.blade.php')
 
 <body class="font-sans antialiased">
   <div class="min-h-screen bg-gray-100 flex">
