@@ -20,9 +20,9 @@
   {{-- Livewire script --}}
   @livewireStyles
 </head>
-@include('./flash.blade.php')
 
 <body class="font-sans antialiased">
+  @include('layouts.flash')
   <div class="min-h-screen bg-gray-100 flex">
     @include('layouts.navigation')
     <main class="flex flex-col w-full">

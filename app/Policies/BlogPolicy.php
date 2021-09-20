@@ -5,11 +5,26 @@ namespace App\Policies;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Auth;
 
 class BlogPolicy
 {
     use HandlesAuthorization;
+
+    /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+     */
+    public function before(User $user, $ability)
+    {
+        if ($user->role_id === 1) {
+            return true;
+        }
+    }
 
     /**
      * Determine whether the user can view any models.
@@ -31,7 +46,9 @@ class BlogPolicy
      */
     public function view(User $user, Post $post)
     {
-        return Auth::check();
+        return Auth::check()
+            ? Response::allow()
+            : Response::deny('Tu n\'as pas les droit suffisant pour réaliser cette action.');
     }
 
     /**
@@ -42,7 +59,9 @@ class BlogPolicy
      */
     public function create(User $user)
     {
-        return $user->role_id === 3;
+        return $user->role_id === 3
+            ? Response::allow()
+            : Response::deny('Tu n\'as pas les droit suffisant pour réaliser cette action.');
     }
 
     /**
@@ -54,7 +73,9 @@ class BlogPolicy
      */
     public function update(User $user, Post $post)
     {
-        return $user->role_id === 3;
+        return $user->role_id === 3 && $post->user_id === $user->id
+            ? Response::allow('wesh')
+            : Response::deny('Tu n\'as pas les droit suffisant pour réaliser cette action.');
     }
 
     /**
@@ -66,7 +87,9 @@ class BlogPolicy
      */
     public function delete(User $user, Post $post)
     {
-        return $user->role_id === 3;
+        return $user->role_id === 3 && $post->user_id === $user->id
+            ? Response::allow()
+            : Response::deny('Tu n\'as pas les droit suffisant pour réaliser cette action.');
     }
 
     /**

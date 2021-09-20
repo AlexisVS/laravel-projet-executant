@@ -8,8 +8,9 @@
   <div class="py-12">
     <div class="max-w-7xl flex justify-center items-center mx-auto sm:px-6 lg:px-8">
       {{-- /* -------------------------------------------------------------------------- */ --}}
-      <form class="flex flex-col space-y-8" action="/dashboard/post" method="post">
+      <form class="flex flex-col space-y-8" action="/dashboard/post/{{ $post->id }}" method="post">
         @csrf
+        @method('PUT')
         <input
           class="bg-gray-50 pl-5 border-2 border-indigo-600 focus:border-indigo-600 ring-indigo-600 focus:bg-indigo-300 placeholder-indigo-600 text-indigo-600 rounded-full text-lg font-bold"
           type="text" name="title" value="{{$post->title}}" placeholder="Nom de la catégorie" id="">
